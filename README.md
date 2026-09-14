@@ -139,7 +139,8 @@ Uma plataforma de AIOps que integra **ingestão de dados de ITSM**, **engenharia
 ## ☁️ Arquitetura em nuvem (Azure)
 
 <div align="center">
-<img src="assets/images/arquitetura-solucao.png" alt="Arquitetura Kairós — AIOps para Locaweb" width="850"/>
+<img width="953" height="490" alt="image" src="https://github.com/user-attachments/assets/86be54cb-548b-409b-82f5-8dfa9666aaf5" />
+
 </div>
 
 Arquitetura de produção seguindo o **padrão Medallion** (Bronze / Silver / Gold):
@@ -190,7 +191,9 @@ Arquitetura de produção seguindo o **padrão Medallion** (Bronze / Silver / Go
 ### Visão Executiva
 
 <div align="center">
-<img src="assets/images/dashboard-executivo.png" alt="Dashboard Executivo — Kairós" width="850"/>
+<img width="1514" height="846" alt="image" src="https://github.com/user-attachments/assets/425c0638-e88c-4d85-8a4a-435935a95631" />
+
+
 </div>
 
 Chance de bater o KPI (P2/P3), orçamento de quebras de OLA consumido no ano, volume real vs. previsto (D+1/D+7) e o alvo de maior concentração de risco.
@@ -198,7 +201,8 @@ Chance de bater o KPI (P2/P3), orçamento de quebras de OLA consumido no ano, vo
 ### Visão Operacional
 
 <div align="center">
-<img src="assets/images/dashboard-operacional.png" alt="Dashboard Operacional — Kairós" width="850"/>
+<img width="1433" height="807" alt="image" src="https://github.com/user-attachments/assets/1cd49d07-586f-4c69-9450-6ccb545fa042" />
+
 </div>
 
 Previsão D+1/D+7, dimensionamento sugerido de analistas e a fila de atuação priorizada por score de ação.
@@ -206,7 +210,8 @@ Previsão D+1/D+7, dimensionamento sugerido de analistas e a fila de atuação p
 ### Estudos e Insights
 
 <div align="center">
-<img src="assets/images/dashboard-insights.png" alt="Dashboard de Insights — Kairós" width="850"/>
+<img width="1425" height="799" alt="image" src="https://github.com/user-attachments/assets/b07bc157-f34a-41bf-b5ab-6ed428cfcbda" />
+
 </div>
 
 Peso de cada fator no risco de OLA (SHAP sobre o CatBoost), taxa de violação por equipe e concentração de violações por dia da semana e faixa horária.
@@ -266,31 +271,6 @@ Apresentação da solução em formato *hands-on*:
 </td>
 </tr>
 </table>
-
----
-
-## 📁 Estrutura do repositório
-
-> Ajuste esta árvore conforme os arquivos reais do seu grupo (notebooks, scripts de pipeline, IaC, etc.). A estrutura abaixo é sugerida para organizar o que já está neste repositório mais o código do projeto.
-
-```
-kairos/
-├── README.md
-├── assets/
-│   └── images/
-│       ├── logo-kairos.png
-│       ├── arquitetura-solucao.png
-│       ├── dashboard-executivo.png
-│       ├── dashboard-operacional.png
-│       └── dashboard-insights.png
-├── docs/
-│   └── Kairos_Sprint4_Solucao_Final.pptx    # deck completo da entrega
-├── data/                                     # (adicionar) dados brutos/tratados ou scripts de ingestão
-├── notebooks/                                # (adicionar) EDA, feature engineering, treino dos modelos
-├── src/                                      # (adicionar) código de produção (ETL, scoring, API)
-├── infra/                                    # (adicionar) IaC (Bicep/Terraform) e workflows do GitHub Actions
-└── powerbi/                                  # (adicionar) arquivo .pbix do dashboard
-```
 
 ---
 
