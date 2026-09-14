@@ -38,7 +38,6 @@
 - [Vídeo pitch](#-vídeo-pitch)
 - [Evolução das sprints](#-evolução-das-sprints-1--4)
 - [Conclusão e próximos passos](#-conclusão-e-próximos-passos)
-- [Estrutura do repositório](#-estrutura-do-repositório)
 - [Links úteis](#-links-úteis)
 
 ---
