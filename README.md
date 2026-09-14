@@ -1,6 +1,7 @@
 <div align="center">
 
-<img src="assets/images/logo-kairos.png" alt="Kairós — Pointing the Direction" width="640"/>
+<img width="1289" height="469" alt="image" src="https://github.com/user-attachments/assets/cecd042a-006f-4ba5-a463-1b8296386749" />
+
 
 # KAIRÓS
 ### Plataforma de AIOps para antecipação de incidentes e risco de OLA
