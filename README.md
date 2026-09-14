@@ -66,13 +66,8 @@ O projeto foi desenvolvido ao longo de 4 sprints como parte do **Challenge Locaw
 
 **Grupo Kairós · Turma 2TSCPV**
 
-| Integrante | RM |
-|---|---|
-| Arthur Medeiros | RM561916 |
-| Mike Rubim | RM561888 |
-| Paulo Gurgel | RM564418 |
-| Pedro Pereira | RM561520 |
-| Vinícius Rocha | RM554974 |
+<img width="1320" height="569" alt="image" src="https://github.com/user-attachments/assets/fd058f30-ba3d-4ae2-8516-42e67721f16c" />
+
 
 ---
 
