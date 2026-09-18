@@ -143,7 +143,7 @@ Uma plataforma de AIOps que integra **ingestão de dados de ITSM**, **engenharia
 ## ☁️ Arquitetura em nuvem (Azure)
 
 <div align="center">
-<img src="docs/images/arquitetura-azure.jpg" alt="Arquitetura Azure do Kairós" width="900">
+<img width="1284" height="712" alt="arquitetura-azure" src="https://github.com/user-attachments/assets/4dccca0e-bc39-4069-819c-edb28a22c141" />
 </div>
 
 Arquitetura de produção seguindo o **padrão Medallion** (Bronze / Silver / Gold):
@@ -177,7 +177,7 @@ Arquitetura de produção seguindo o **padrão Medallion** (Bronze / Silver / Go
 Estimativa de custo mensal para operar a arquitetura do Kairós em ambiente operacional padrão de produção:
 
 <div align="center">
-<img src="docs/images/custo-azure.png" alt="Estimativa de custos Azure do Kairós" width="800">
+<img width="1600" height="659" alt="custo-azure" src="https://github.com/user-attachments/assets/64a932ad-c56c-4bfa-a23f-ebcf057474ea" />
 </div>
 
 | Serviço Azure | Detalhamento / Dimensionamento | Custo mensal (USD) |
@@ -222,7 +222,7 @@ O dashboard passou a ter **4 páginas** no Power BI, cada uma com um público e 
 ### Visão Executiva
 
 <div align="center">
-<img src="docs/images/dashboard-executiva.png" alt="Dashboard - Visão Executiva" width="900">
+<img width="1345" height="761" alt="dashboard-executiva" src="https://github.com/user-attachments/assets/1c16f4ff-05bf-4df0-ba9d-90c0d9bb3504" />
 </div>
 
 Placar do contrato (2 KPIs × 2 prioridades): **3 de 4** indicadores batidos — falta apenas a quebra de OLA em P2, por 3 quebras. Chance de fechar o ano dentro do KPI de OLA: **70% em P2, 100% em P3**. Ritmo acumulado de quebras contra o limite rateado pelo tempo mostra P2 já acima da régua (107,7% do ritmo) enquanto P3 segue confortável (74,5%).
@@ -230,7 +230,7 @@ Placar do contrato (2 KPIs × 2 prioridades): **3 de 4** indicadores batidos —
 ### Visão Operacional
 
 <div align="center">
-<img src="docs/images/dashboard-operacional.png" alt="Dashboard - Visão Operacional" width="900">
+<img width="1263" height="718" alt="dashboard-operacional" src="https://github.com/user-attachments/assets/95b51da1-96d7-41d8-94ae-2243450539b0" />
 </div>
 
 Previsão da semana: **288 chamados em D+7** (41/dia), queda de **25,6%** vs. a janela anterior. Dimensionamento sugerido para amanhã: **49 chamados → 5 analistas** (premissa de 10 chamados/analista/dia, a confirmar com a Locaweb). Concentração de risco: um único alvo (`lsin·cat31`) responde por **32 das 238 violações do ano** — 13,4% das violações vindo de apenas 0,20% do volume tratado.
@@ -238,7 +238,7 @@ Previsão da semana: **288 chamados em D+7** (41/dia), queda de **25,6%** vs. a 
 ### Tendência e Ação
 
 <div align="center">
-<img src="docs/images/dashboard-tendencia-acao.png" alt="Dashboard - Tendência e Ação" width="900">
+<img width="1266" height="717" alt="dashboard-tendencia-acao" src="https://github.com/user-attachments/assets/aa2ededf-4d57-438d-a892-766f5aa08d26" />
 </div>
 
 Nova página do dashboard: compara os últimos 90 dias maduros contra os 90 anteriores. **14 chamados** precisam ser revisados antes de estourar — 9 deles já furaram o OLA no teste, contra apenas 0,99% da base geral. **37% das quebras do ano** se concentram em 5 alvos. Simulações do tipo "se este alvo for resolvido" quantificam o ganho: resolver `lsin·cat77` evitaria 9 quebras e destravaria 50 p.p. de atingimento em P2. A fila do dia traz o SHAP local de cada chamado, com a ação sugerida (ex.: "realocar ou reforçar a equipe").
@@ -246,7 +246,7 @@ Nova página do dashboard: compara os últimos 90 dias maduros contra os 90 ante
 ### Visão Analítica (Estudos)
 
 <div align="center">
-<img src="docs/images/dashboard-analitica.png" alt="Dashboard - Visão Analítica" width="900">
+<img width="1265" height="715" alt="dashboard-analitica" src="https://github.com/user-attachments/assets/fcf1c24c-24e3-4a55-ad08-3d39a2cfac49" />
 </div>
 
 Peso de cada fator no risco de OLA via SHAP sobre o CatBoost (ROC-AUC 0,82 ± 0,01): **Equipe** é o fator nº 1 (19,2%), **Produto** é o último (6,3%). Três achados que viram ação: chamado aberto na mão viola **2,7×** mais do que o aberto por monitoramento automático; chamado reincidente viola **menos**, não mais; fins de semana violam **1,8×** mais. Pior janela: sábado 21h–23h, **4,4×** a média da operação.
@@ -314,7 +314,6 @@ Apresentação da solução em formato *hands-on*:
 |---|---|
 | 📊 Dashboard Power BI | [Abrir dashboard](https://app.powerbi.com/links/qh5oOHP-vM?ctid=11dbbfe2-89b8-4549-be10-cec364e59551&pbi_source=linkShare) |
 | 🎬 Vídeo pitch | [Assistir no YouTube](https://youtu.be/v3YxQyDFvHo?si=iiiqYt5xHw7uboks) |
-| 📑 Deck da Sprint 4 (rev01) | [`docs/Kairos_Sprint4_Solucao_Final_rev01.pptx`](docs/Kairos_Sprint4_Solucao_Final_rev01.pptx) |
 
 ---
 
