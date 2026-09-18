@@ -180,16 +180,6 @@ Estimativa de custo mensal para operar a arquitetura do Kairós em ambiente oper
 <img width="1600" height="659" alt="custo-azure" src="https://github.com/user-attachments/assets/64a932ad-c56c-4bfa-a23f-ebcf057474ea" />
 </div>
 
-| Serviço Azure | Detalhamento / Dimensionamento | Custo mensal (USD) |
-|---|---|---|
-| Azure Data Factory | Ingestão e pipelines diários (Medallion) | US$ 20,00 |
-| Azure SQL Database | Camada Gold · vCore Propósito Geral (32 GB) | US$ 104,78 |
-| Storage Accounts (ADLS Gen2) | Data Lake 100 GB Hot Tier (LRS) | US$ 3,12 |
-| Azure Key Vault | Gestão de credenciais e segredos (50k ops) | US$ 0,15 |
-| Azure Container Instances (ACI) | Scoring diário em batch (2 vCPU, 4 GB RAM) | US$ 1,50 |
-| Azure Monitor / App Insights | Logs e observabilidade (~3 GB de ingestão) | US$ 8,50 |
-| **Total mensal estimado** | **Ambiente operacional padrão de produção** | **US$ 138,05** |
-
 > A camada Gold em Azure SQL Database concentra cerca de **76%** do custo total; o restante da arquitetura (ingestão, storage, scoring, observabilidade e segredos) soma menos de US$ 35/mês.
 >
 > Fonte: Calculadora de Preços da Azure.
