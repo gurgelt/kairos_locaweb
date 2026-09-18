@@ -6,7 +6,7 @@
 # KAIRÓS
 ### Plataforma de AIOps para antecipação de incidentes e risco de OLA
 
-**Challenge Locaweb × FIAP 2026 — Sprint 4 · Solução Final**
+**Challenge Locaweb × FIAP 2026 — Sprint 4 · Solução Final (rev01)**
 
 [![Challenge](https://img.shields.io/badge/Challenge-Locaweb%20%C3%97%20FIAP%202026-e30613?style=for-the-badge)](#)
 [![Sprint](https://img.shields.io/badge/Sprint-4%20%7C%20Solu%C3%A7%C3%A3o%20Final-1f1f1f?style=for-the-badge)](#)
@@ -28,11 +28,13 @@
 - [Sobre o projeto](#-sobre-o-projeto)
 - [O time](#-o-time)
 - [O desafio](#-o-desafio)
+- [A persona: Ana](#-a-persona-ana)
 - [Objetivos do projeto](#-objetivos-do-projeto)
 - [Público-alvo × outputs](#-público-alvo--outputs)
 - [Proposta da solução](#-proposta-da-solução)
 - [Arquitetura em nuvem](#️-arquitetura-em-nuvem-azure)
 - [Stack tecnológico](#-stack-tecnológico)
+- [Projeção de custo](#-projeção-de-custo-azure)
 - [Modelagem preditiva e resultados](#-modelagem-preditiva-e-resultados)
 - [Demonstração — dashboards](#-demonstração--dashboards)
 - [Vídeo pitch](#-vídeo-pitch)
@@ -53,7 +55,7 @@ O projeto foi desenvolvido ao longo de 4 sprints como parte do **Challenge Locaw
 | Métrica | Resultado |
 |---|---|
 | 🧠 Erro de previsão (MAE) do volume que consome OLA | **-20%** vs. baseline sazonal |
-| 🛡️ Classificador de risco de violação de OLA (CatBoost) | **ROC-AUC 0,85** |
+| 🛡️ Classificador de risco de violação de OLA (CatBoost) | **ROC-AUC 0,82 – 0,84** |
 | 🕸️ Descrições de incidentes agrupadas por NLP | **11.372 → 20** clusters nomeáveis |
 | 🎯 Captura de violações revisando 20% da fila priorizada | **63%** das violações de OLA |
 
@@ -85,15 +87,23 @@ Identificamos um **salto de 7×** no volume de incidentes em **01/09/2025**. Ao 
 - **3.766 tipos de alerta inéditos** surgiram no mesmo dia;
 - Uma nova camada de monitoramento estava gerando **ruído automático que não consome OLA**.
 
+A distinção entre a série **"Com Intervenção" (entra no KPI)** — estável, ~50 a 100 incidentes/dia — e a série **"Sem Intervenção" (ruído automático)** — que salta para 700–1.000 incidentes/dia após o pico — passou a ser o critério oficial de modelagem do Kairós: todos os modelos preveem apenas a série que de fato consome OLA.
+
 ### O que pode ser feito
 
 A **antecipação** do volume e do risco de violação de OLA, e das **causas crônicas** que se repetem — foi esse o problema que o Kairós foi desenhado para resolver.
 
 ---
 
+## 🙋 A persona: Ana
+
+Para ancorar a apresentação da Solução Final em um caso de uso concreto, o pitch da Sprint 4 passou a ser narrado pela perspectiva de **Ana**, uma analista fictícia do NOC da Locaweb: hoje ela reage a incidentes depois que eles já estouraram o OLA, sem visibilidade do que vem pela frente. A jornada mostra esse "antes" reativo e o "depois" com o Kairós — dashboards preditivos indicando onde agir antes da violação acontecer. Os quatro objetivos do projeto (seção seguinte) respondem diretamente ao que **"a Ana" passa a ter em mãos** com a solução.
+
+---
+
 ## 🎯 Objetivos do projeto
 
-Quatro objetivos foram definidos pelo desafio — o Kairós responde a cada um deles:
+Quatro objetivos foram definidos pelo desafio — e é isso que a Ana passa a ter em mãos com o Kairós:
 
 | # | Objetivo | Como o Kairós entrega |
 |---|---|---|
@@ -133,8 +143,7 @@ Uma plataforma de AIOps que integra **ingestão de dados de ITSM**, **engenharia
 ## ☁️ Arquitetura em nuvem (Azure)
 
 <div align="center">
-<img width="953" height="490" alt="image" src="https://github.com/user-attachments/assets/86be54cb-548b-409b-82f5-8dfa9666aaf5" />
-
+<img src="docs/images/arquitetura-azure.jpg" alt="Arquitetura Azure do Kairós" width="900">
 </div>
 
 Arquitetura de produção seguindo o **padrão Medallion** (Bronze / Silver / Gold):
@@ -163,6 +172,30 @@ Arquitetura de produção seguindo o **padrão Medallion** (Bronze / Silver / Go
 
 ---
 
+## 💰 Projeção de custo (Azure)
+
+Estimativa de custo mensal para operar a arquitetura do Kairós em ambiente operacional padrão de produção:
+
+<div align="center">
+<img src="docs/images/custo-azure.png" alt="Estimativa de custos Azure do Kairós" width="800">
+</div>
+
+| Serviço Azure | Detalhamento / Dimensionamento | Custo mensal (USD) |
+|---|---|---|
+| Azure Data Factory | Ingestão e pipelines diários (Medallion) | US$ 20,00 |
+| Azure SQL Database | Camada Gold · vCore Propósito Geral (32 GB) | US$ 104,78 |
+| Storage Accounts (ADLS Gen2) | Data Lake 100 GB Hot Tier (LRS) | US$ 3,12 |
+| Azure Key Vault | Gestão de credenciais e segredos (50k ops) | US$ 0,15 |
+| Azure Container Instances (ACI) | Scoring diário em batch (2 vCPU, 4 GB RAM) | US$ 1,50 |
+| Azure Monitor / App Insights | Logs e observabilidade (~3 GB de ingestão) | US$ 8,50 |
+| **Total mensal estimado** | **Ambiente operacional padrão de produção** | **US$ 138,05** |
+
+> A camada Gold em Azure SQL Database concentra cerca de **76%** do custo total; o restante da arquitetura (ingestão, storage, scoring, observabilidade e segredos) soma menos de US$ 35/mês.
+>
+> Fonte: Calculadora de Preços da Azure.
+
+---
+
 ## 🔬 Modelagem preditiva e resultados
 
 | Modelo | Papel | Resultado |
@@ -170,45 +203,53 @@ Arquitetura de produção seguindo o **padrão Medallion** (Bronze / Silver / Go
 | Baseline sazonal | Referência obrigatória · P2/P3 | MAE 5,2 · 11,5 |
 | **Prophet** ✅ | Uma série por prioridade (D+1/D+7) | MAE 3,9 · 9,1 (**-20%**) |
 | SARIMAX | Vence no volume bruto | Não escala para N séries |
-| **CatBoost** ✅ | Risco de violação de OLA | **ROC-AUC 0,84–0,85** |
+| **CatBoost** ✅ | Risco de violação de OLA | **ROC-AUC 0,84** na comparação de modelos · **0,82 ± 0,01** validado em produção (50 violações no teste) |
 | TF-IDF + KMeans | Clusters de causa raiz | 20 grupos (k=20) |
 
 **Destaques de validação:**
 - 🎯 Revisando apenas **20% da fila** priorizada por risco, o time captura **63% das violações de OLA** — 3,1× melhor que uma triagem aleatória.
+- 🕵️ **Sinal precursor identificado:** um servidor com mais de 10 chamados P4 na semana tem **16%** de chance de gerar um incidente sério (P2/P3) nos 3 dias seguintes — quase o dobro dos ~10% de um servidor "quieto".
+- ⏰ **Pior janela de risco:** sábado, das 21h às 23h — a chance de violação é **4,4×** a média da operação.
 - 🔎 A flag oficial de violação de KPI não reproduz integralmente a regra documentada — **3.020 incidentes** seguem pendentes de validação junto à Locaweb.
-- 🔒 **Anti-leakage:** `SEED=42`, split sempre temporal e `TimeSeriesSplit` de 5 dobras — features de calendário nunca vazam o futuro.
+- 🔒 **Anti-leakage:** `SEED=42`, split sempre temporal e `TimeSeriesSplit` de 5 dobras — apenas atributos conhecidos na abertura do chamado entram no modelo (duração, resolução e status ficam de fora).
 
 ---
 
 ## 📊 Demonstração — dashboards
 
+O dashboard passou a ter **4 páginas** no Power BI, cada uma com um público e uma decisão diferentes:
+
 ### Visão Executiva
 
 <div align="center">
-<img width="1514" height="846" alt="image" src="https://github.com/user-attachments/assets/425c0638-e88c-4d85-8a4a-435935a95631" />
-
-
+<img src="docs/images/dashboard-executiva.png" alt="Dashboard - Visão Executiva" width="900">
 </div>
 
-Chance de bater o KPI (P2/P3), orçamento de quebras de OLA consumido no ano, volume real vs. previsto (D+1/D+7) e o alvo de maior concentração de risco.
+Placar do contrato (2 KPIs × 2 prioridades): **3 de 4** indicadores batidos — falta apenas a quebra de OLA em P2, por 3 quebras. Chance de fechar o ano dentro do KPI de OLA: **70% em P2, 100% em P3**. Ritmo acumulado de quebras contra o limite rateado pelo tempo mostra P2 já acima da régua (107,7% do ritmo) enquanto P3 segue confortável (74,5%).
 
 ### Visão Operacional
 
 <div align="center">
-<img width="1433" height="807" alt="image" src="https://github.com/user-attachments/assets/1cd49d07-586f-4c69-9450-6ccb545fa042" />
-
+<img src="docs/images/dashboard-operacional.png" alt="Dashboard - Visão Operacional" width="900">
 </div>
 
-Previsão D+1/D+7, dimensionamento sugerido de analistas e a fila de atuação priorizada por score de ação.
+Previsão da semana: **288 chamados em D+7** (41/dia), queda de **25,6%** vs. a janela anterior. Dimensionamento sugerido para amanhã: **49 chamados → 5 analistas** (premissa de 10 chamados/analista/dia, a confirmar com a Locaweb). Concentração de risco: um único alvo (`lsin·cat31`) responde por **32 das 238 violações do ano** — 13,4% das violações vindo de apenas 0,20% do volume tratado.
 
-### Estudos e Insights
+### Tendência e Ação
 
 <div align="center">
-<img width="1425" height="799" alt="image" src="https://github.com/user-attachments/assets/b07bc157-f34a-41bf-b5ab-6ed428cfcbda" />
-
+<img src="docs/images/dashboard-tendencia-acao.png" alt="Dashboard - Tendência e Ação" width="900">
 </div>
 
-Peso de cada fator no risco de OLA (SHAP sobre o CatBoost), taxa de violação por equipe e concentração de violações por dia da semana e faixa horária.
+Nova página do dashboard: compara os últimos 90 dias maduros contra os 90 anteriores. **14 chamados** precisam ser revisados antes de estourar — 9 deles já furaram o OLA no teste, contra apenas 0,99% da base geral. **37% das quebras do ano** se concentram em 5 alvos. Simulações do tipo "se este alvo for resolvido" quantificam o ganho: resolver `lsin·cat77` evitaria 9 quebras e destravaria 50 p.p. de atingimento em P2. A fila do dia traz o SHAP local de cada chamado, com a ação sugerida (ex.: "realocar ou reforçar a equipe").
+
+### Visão Analítica (Estudos)
+
+<div align="center">
+<img src="docs/images/dashboard-analitica.png" alt="Dashboard - Visão Analítica" width="900">
+</div>
+
+Peso de cada fator no risco de OLA via SHAP sobre o CatBoost (ROC-AUC 0,82 ± 0,01): **Equipe** é o fator nº 1 (19,2%), **Produto** é o último (6,3%). Três achados que viram ação: chamado aberto na mão viola **2,7×** mais do que o aberto por monitoramento automático; chamado reincidente viola **menos**, não mais; fins de semana violam **1,8×** mais. Pior janela: sábado 21h–23h, **4,4×** a média da operação.
 
 > 🔗 **Link funcional do dashboard (Power BI):** [app.powerbi.com/links/qh5oOHP-vM](https://app.powerbi.com/links/qh5oOHP-vM?ctid=11dbbfe2-89b8-4549-be10-cec364e59551&pbi_source=linkShare)
 
@@ -229,7 +270,7 @@ Apresentação da solução em formato *hands-on*:
 | **1** | Problema & contexto | Definição do desafio, benchmark e contextualização da operação |
 | **2** | Arquitetura & protótipos | Proposta de solução, arquitetura, telas e tecnologias |
 | **3** | Modelagem preditiva | Prophet, CatBoost e clusters; achados e engenharia de 30 features |
-| **4** | Solução final | Dashboard operacional, pipeline em nuvem, vídeo pitch e entrega técnica |
+| **4** | Solução final | Dashboard de 4 páginas, projeção de custo, pipeline em nuvem, vídeo pitch e entrega técnica |
 
 ---
 
@@ -258,9 +299,8 @@ Apresentação da solução em formato *hands-on*:
 </td>
 <td valign="top">
 
-- Consolidar a explicabilidade por SHAP (por incidente e combinação crítica)
-- Validar com a Locaweb a regra de violação de KPI (3.020 casos)
-- Pipeline recorrente em nuvem alimentando o Power BI em produção
+- Operacionalizar a solução na nuvem, atualizando os painéis em tempo real
+- Integrar o modelo desenvolvido ao sistema de gestão de incidentes da Locaweb
 
 </td>
 </tr>
@@ -274,7 +314,7 @@ Apresentação da solução em formato *hands-on*:
 |---|---|
 | 📊 Dashboard Power BI | [Abrir dashboard](https://app.powerbi.com/links/qh5oOHP-vM?ctid=11dbbfe2-89b8-4549-be10-cec364e59551&pbi_source=linkShare) |
 | 🎬 Vídeo pitch | [Assistir no YouTube](https://youtu.be/v3YxQyDFvHo?si=iiiqYt5xHw7uboks) |
-| 📑 Deck da Sprint 4 | [`docs/Kairos_Sprint4_Solucao_Final.pptx`](docs/Kairos_Sprint4_Solucao_Final.pptx) |
+| 📑 Deck da Sprint 4 (rev01) | [`docs/Kairos_Sprint4_Solucao_Final_rev01.pptx`](docs/Kairos_Sprint4_Solucao_Final_rev01.pptx) |
 
 ---
 
